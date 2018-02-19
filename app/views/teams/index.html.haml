@@ -1,0 +1,25 @@
+%h2.text-center.mx-3 Команды
+-if policy(@teams).create?
+  = link_to 'Создать команду', new_team_path, class: "btn btn-success mt-3"
+- @teams.each do |team|
+  .team
+    %h3 
+      =team.name
+    %hr.my-4
+    %p  
+      =team.description
+    %hr.my-4 
+    %span Учасники:
+    %ul.list-inline
+      -team.profiles.each do |profile|
+        %li.list-inline-item 
+          =profile.first_name
+    .text-right
+      -if policy(team).show?
+        = link_to 'Посмотреть', team , class: "btn btn-primary btn"
+      -if policy(team).edit?
+        = link_to 'Редактировать', edit_team_path(team), class: "btn btn-primary btn"
+      -if policy(team).destroy?
+        = link_to 'Удалить', team, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn"
+
+

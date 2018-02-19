@@ -1,0 +1,22 @@
+%nav.top_bar.navbar.navbar-expand-lg.navbar-dark.bg-dark
+	%span.navbar-brand Some Brand
+	.collapse.navbar-collapse#navbarNavAltMarkup
+		.navbar-nav
+			-if user_signed_in?
+				=link_to "Депортаменты", departments_path, class: "nav-item nav-link"
+				=link_to "Команды", teams_path, class: "nav-item nav-link"
+				=link_to "Сотрудники", profiles_path, class: "nav-item nav-link"
+				-if policy(Profile).invitation_user? 
+					=link_to "Пригласить", invitation_user_path, class: "nav-item nav-link"
+				=link_to "мой профиль", current_user.profile, class: "nav-item nav-link"
+	.navbar-nav
+		-if user_signed_in?
+			= link_to "Выйти", destroy_user_session_path , :method => :delete, :data => { :confirm => 'Вы уверены?' }, class: "nav-item nav-link btn btn-danger"
+		-else
+			= link_to "Вход", new_user_session_path , class: "nav-item nav-link btn btn-success"
+			= link_to "Регистрация", new_user_registration_path , class: "nav-item nav-link btn btn-secondary" 
+/ %p#notice.text-center= notice
+-flash.each do |name, message|
+	.alert.alert-danger.mt-8
+		=message
+	

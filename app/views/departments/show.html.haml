@@ -1,0 +1,31 @@
+%h3.text-center 
+	=@department.name
+
+/ = link_to 'Edit', edit_department_path(@department)
+/ \|
+/ = link_to 'Back', departments_path
+
+- @profiles.each do |profile|
+	.col-md-12.mb-3.profile-item
+		.row
+			.col-md-2
+				= image_tag profile.image.url(:large), class: "rounded float-left thumb-profile-img" if profile.image?
+			.col-md-10
+				%table.table
+					%thead
+						%tr
+							%th Имя
+							%th Фамилия
+							%th Зарплата
+							%th Email
+					%tbody
+						%tr
+							%td= profile.first_name
+							%td= profile.last_name
+							%td= profile.wage
+							%td= profile.email
+	.container-fluid.text-right.mb-3          
+		= link_to 'Посмотреть', profile, class: "btn btn-primary btn"
+		= link_to 'Редактировать', edit_profile_path(profile), class: "btn btn-primary btn"
+
+

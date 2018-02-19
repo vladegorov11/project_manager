@@ -1,0 +1,36 @@
+.row
+  .col-md-3
+  .col-md-6.profile-item
+    = form_for @profile, html: {multipart: true} do |f|
+      - if @profile.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@profile.errors.count, "error")} prohibited this profile from being saved:"
+          %ul
+            - @profile.errors.full_messages.each do |message|
+              %li= message
+      - if current_user.admin? or current_user.id == @profile.user_id or current_user.human_resource_manager?
+        .form-group
+          = f.label 'Имя'
+          = f.text_field :first_name, class: 'form-control'
+        .form-group
+          = f.label "Фамилия"
+          = f.text_field :last_name, class: 'form-control'
+      - if current_user.admin? or current_user.human_resource_manager?
+        .form-group
+          = f.label "Зарплата"
+          = f.number_field :wage, class: 'form-control'
+      - if current_user.admin? or current_user.department_head? 
+        .form-group
+          = f.label "Департамент"
+          = f.collection_select :department_id, Department.order(:name), :id, :name, {include_blank: true}, class: 'form-control'
+      - if current_user.admin? or current_user.team_lead?
+        .form-group
+          = f.label "Команда"
+          = f.collection_select :team_id, Team.order(:name), :id, :name, {include_blank: true}, class: 'form-control'
+      .form-group
+        = f.label "Аватарка"
+        = f.file_field :image, class: "form-control-file "
+      .actions
+        .text-right
+          = f.submit 'Сохранить', class: "btn btn-success"
+  .col-md-3

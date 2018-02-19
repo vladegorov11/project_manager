@@ -1,0 +1,34 @@
+.row
+	.col-md-8
+	.col-md-4.profile-item
+		-if policy(@team).edit?
+			= link_to 'Редактировать Группу', edit_team_path(@team), class: "btn btn-outline-success  float-right"
+		%br
+		%br
+		%p 
+			%b Команда:
+			= @team.name
+		%p
+			%b Описание:
+			= @team.description
+		%p 
+			%b Члены команды:
+		%ul.list-unstyled
+			-@team.profiles.each do |profile| 
+				%li.media.mt-3
+					= image_tag profile.image.url(:large), class: "rounded float-left mr-2 thumb-profile-img-team" if profile.image?
+					.media-body
+						%p.mt-0.mb-1
+							%b Имя:
+							= profile.first_name
+						%p.mt-0.mb-1
+							%b Фамилия:
+							= profile.last_name
+						%p.mt-0.mb-1
+							%b email:
+							= profile.email	
+						%p
+							%b ЗП:
+							= profile.wage
+
+

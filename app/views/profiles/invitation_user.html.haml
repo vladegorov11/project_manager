@@ -1,0 +1,17 @@
+= form_for User.new, url: user_invitation_path, html: {multipart: true}, class: "form-inline mt-4" do |f|
+	.form-row
+		.col-3
+		.form-group.col-5
+			= f.text_field :email, class: 'form-control ', label: false, placeholder: "Email" 
+		.col
+			= f.submit 'Пригласить', class: "btn btn-primary"
+.team
+	- @users.each do |user|
+		-if user.invitation_accepted?
+			.bg-success.mb-3.p-2.rounded
+				=user.email
+				%p.float-right Принял(a) заявку
+		-else
+			.bg-danger.mb-3.p-2.rounded
+				=user.email
+				%p.float-right Не принял(a) заявку

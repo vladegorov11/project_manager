@@ -1,0 +1,21 @@
+.row
+  .col-md-3
+  .col-md-6.profile-item
+    = form_for @user do |f|
+      - if @user.errors.any?
+        #error_explanation
+          %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+          %ul
+            - @user.errors.full_messages.each do |message|
+              %li= message
+
+      .form-group
+        %h4.text-center Роли
+        - for role in Role.all
+          .text-left.mb-2
+            = check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role)
+            = role.name
+      .actions
+        .text-right
+          = f.submit 'Сохранить', class: "btn btn-success"
+  .col-md-3

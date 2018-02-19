@@ -1,0 +1,34 @@
+
+.row.mt-4
+	.col-md-2
+	.col-md-8.profile-item
+		.row
+			.col-md-5
+				= image_tag @profile.image.url(:large), class: "rounded float-left mr-2 large-profile-img" if @profile.image?
+			.col-md-7.border-left
+				= link_to 'Редактировать профиль', edit_profile_path(@profile), class: "btn btn-outline-success float-right"
+				- if policy(current_user).edit?
+					= link_to 'добавить роль', edit_user_path(@profile.user), class: "btn btn-outline-success "
+				%br
+				%br
+				%p.border-bottom
+					%b Имя:
+					= @profile.first_name
+				%p.border-bottom
+					%b Фамилия:
+					= @profile.last_name
+				-if current_user.show_profile_including_wage? or current_user.id == @profile.user_id	
+					%p.border-bottom
+						%b Зарплата:
+						= @profile.wage
+				%p.border-bottom 
+					%b Депортамент:
+					= @profile.department.name unless @profile.department.blank?
+				%p.border-bottom 
+					%b Должности:
+					- @profile.user.roles.each do |role|
+						= role.name
+
+ 	
+	.col-md-2
+

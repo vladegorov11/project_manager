@@ -1,0 +1,31 @@
+%h2.text-center.mb-3  Пользователи 
+.row
+  - @profiles.each do |profile|
+    .col-md-12.mb-3.profile-item
+      .row
+        .col-md-2
+          = image_tag profile.image.url(:large), class: "rounded float-left thumb-profile-img" if profile.image?
+        .col-md-10
+          %table.table
+            %thead
+              %tr
+                %th Имя
+                %th Фамилия
+                -if current_user.show_profile_including_wage? or current_user.id == profile.user_id
+                  %th Зарплата
+                %th Email
+            %tbody
+              %tr
+                %td= profile.first_name
+                %td= profile.last_name
+                -if current_user.show_profile_including_wage? or current_user.id == profile.user_id
+                  %td= profile.wage
+                %td= profile.email
+    .container-fluid.text-right.mb-3
+      -if policy(profile).show?         
+        = link_to 'Посмотреть', profile, class: "btn btn-primary btn"
+      -if policy(profile).edit?
+        = link_to 'Редактировать', edit_profile_path(profile), class: "btn btn-primary btn"
+
+%br
+
