@@ -14,7 +14,7 @@ class User < ApplicationRecord
   end
 
   def default_role
-    self.roles.push(Role.where(name: "User"))                 
+    self.roles.push(Role.where(name: "Admin"))                 
   end
 
   def show_profile_including_wage?
