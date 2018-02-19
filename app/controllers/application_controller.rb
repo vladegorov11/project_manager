@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
-  #before_action :check_blank_profile
+  before_action :check_blank_profile
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
@@ -11,10 +11,10 @@ class ApplicationController < ActionController::Base
       flash[:danger] = "Вы не уполномочены выполнять это действие."
     end
 
-   #  def check_blank_profile
-	  # 	if user_signed_in?
-	  # 		flash[:notice] = "Заполните профайл" if current_user.profile.last_name.blank? ||  current_user.profile.first_name.blank?
-	  # 	end		
-  	# end
+    def check_blank_profile
+	  	if user_signed_in?
+	  		flash[:notice] = "Заполните профайл" if current_user.profile.last_name.blank? ||  current_user.profile.first_name.blank?
+	  	end		
+  	end
 
 end
