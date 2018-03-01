@@ -1,0 +1,8 @@
+%h4.text-center Комментарии
+=form_with(model: [ @team, @task, @task.comments.build ], local: true) do |f| 
+	%p
+		= f.hidden_field :author_id, :value => "#{current_user.profile.id}"
+	%p
+		= f.text_area :body, :id => 'comment_body'
+	%p
+		= f.submit "Отправить", class: "btn btn-success"

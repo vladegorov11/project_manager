@@ -1,8 +1,13 @@
 .row
 	.col-md-8
+		.text-center.profile-item.mb-4
+			%h4 Задачи 
+		= render 'shared/tasks' 
 	.col-md-4.profile-item
+		-if policy(@team).new?
+			= link_to 'Новая задача', new_team_task_path(@team), class: "btn btn-outline-success btn-sm"
 		-if policy(@team).edit?
-			= link_to 'Редактировать Группу', edit_team_path(@team), class: "btn btn-outline-success  float-right"
+			= link_to 'Редактировать Группу', edit_team_path(@team), class: "btn btn-outline-success btn-sm float-right"
 		%br
 		%br
 		%p 
@@ -15,8 +20,11 @@
 			%b Члены команды:
 		%ul.list-unstyled
 			-@team.profiles.each do |profile| 
-				%li.media.mt-3
-					= image_tag profile.image.url(:large), class: "rounded float-left mr-2 thumb-profile-img-team" if profile.image?
+				%li.media.mt-3.border-bottom
+					- if profile.image?
+						= image_tag profile.image.url(:large), class: "rounded float-left mr-2 thumb-profile-img-team rounded-circle"
+					- else 
+						= image_tag "https://www.jamf.com/jamf-nation/img/default-avatars/generic-user-purple.png", class: "rounded float-left mr-2 thumb-profile-img-team rounded-circle"
 					.media-body
 						%p.mt-0.mb-1
 							%b Имя:
@@ -30,5 +38,4 @@
 						%p
 							%b ЗП:
 							= profile.wage
-
 

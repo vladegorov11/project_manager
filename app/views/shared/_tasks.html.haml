@@ -1,0 +1,27 @@
+- @tasks.each do |task|
+	- if show_task(task, current_user)
+		.profile-item.mb-2.border.rounded
+			- if task.new_task
+				%i.material-icons fiber_new
+			- if policy(task).destroy?
+				.float-right
+					= link_to "<i class='material-icons'>cancel</i>".html_safe, [task.team, task], method: :delete, data: { confirm: 'Are you sure?' }
+			- if policy(task).show?
+				.mr-2.float-right
+					= link_to "<i class='material-icons'>visibility</i>".html_safe, team_task_path(@team, task)
+			%p.mt-4 
+				= task.name
+			%div{class: "rounded alert alert-#{status_color(task)}"}
+				.row
+					.col-md-6
+						%span 
+							%b Выполняет: 
+							= "#{task.profile.first_name} #{task.profile.last_name}"
+					.col-md-6			
+						%span
+							%b Cтатус:
+							= task.status_label
+							%span.float-right
+								= task.comments.count
+							%i.material-icons.float-right.mr-1 comment 
+

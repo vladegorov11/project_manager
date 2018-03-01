@@ -1,13 +1,13 @@
 %h2.text-center.mx-3 Депортаменты
 -if policy(@departments).create?
-	= link_to 'Создать депортамент', new_department_path, class: "btn btn-success mt-3"
+	= link_to 'Создать депортамент', new_department_path, class: "btn btn-success mt-3 btn-sm"
 - @departments.each do |department|
 	.team
 		%h3= department.name
 		.text-right
 			-if policy(department).show?
-				= link_to 'Посмотреть', department , class: "btn btn-primary btn"
+				= link_to 'Посмотреть', department , class: "btn btn-primary btn btn-sm"
 			-if policy(department).edit?  
-				= link_to 'Редактировать', edit_department_path(department), class: "btn btn-primary btn"
+				= link_to 'Редактировать', edit_department_path(department), class: "btn btn-primary btn btn-sm"
 			-if policy(department).destroy?  
-				= link_to 'Удалить', department, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn"
+				= link_to 'Удалить', department, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn btn-sm"

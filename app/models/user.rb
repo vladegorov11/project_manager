@@ -2,24 +2,29 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable #, :confirmable
+         :recoverable, :rememberable, :confirmable, :validatable
 
   has_one :profile, dependent: :destroy  
   has_and_belongs_to_many  :roles
-  after_create :create_profile_for_user, :default_role 
+  after_invitation_accepted :create_profile_for_user, :default_role 
 
   def create_profile_for_user  
 		Profile.create(user_id: self.id, email: self.email)                   
   end
-
+  
   def default_role
     self.roles.push(Role.where(name: "Admin"))                 
+  end
+
+  def after_confirmation
+    create_profile_for_user
+    default_role
   end
 
   def show_profile_including_wage?
     self.admin? or self.office_head?  or self.department_head?
   end
-  def admin? 
+  def admin?
   	check_role(self, "Admin")
   end
 

@@ -1,7 +1,7 @@
 %h2.text-center.mb-3  Пользователи 
-.row
+.row.profile-item
   - @profiles.each do |profile|
-    .col-md-12.mb-3.profile-item
+    .col-md-12.profile-item
       .row
         .col-md-2
           = image_tag profile.image.url(:large), class: "rounded float-left thumb-profile-img" if profile.image?
@@ -21,11 +21,14 @@
                 -if current_user.show_profile_including_wage? or current_user.id == profile.user_id
                   %td= profile.wage
                 %td= profile.email
-    .container-fluid.text-right.mb-3
+
+    .container-fluid.text-right
       -if policy(profile).show?         
-        = link_to 'Посмотреть', profile, class: "btn btn-primary btn"
+        = link_to 'Посмотреть', profile, class: "btn btn-primary btn btn-sm"
       -if policy(profile).edit?
-        = link_to 'Редактировать', edit_profile_path(profile), class: "btn btn-primary btn"
+        = link_to 'Редактировать', edit_profile_path(profile), class: "btn btn-primary btn btn-sm"
+      %hr.my-4    
+
 
 %br
 

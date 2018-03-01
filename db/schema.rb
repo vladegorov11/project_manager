@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180218201233) do
+ActiveRecord::Schema.define(version: 20180301092900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commenter"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "task_id"
+    t.integer "author_id"
+    t.index ["author_id"], name: "index_comments_on_author_id"
+  end
 
   create_table "departments", force: :cascade do |t|
     t.string "name"
@@ -32,6 +42,9 @@ ActiveRecord::Schema.define(version: 20180218201233) do
     t.integer "department_id"
     t.integer "team_id"
     t.json "image"
+    t.string "phone"
+    t.text "skill"
+    t.integer "done_task_count", default: 0
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
@@ -44,6 +57,19 @@ ActiveRecord::Schema.define(version: 20180218201233) do
   create_table "roles_users", id: false, force: :cascade do |t|
     t.integer "role_id"
     t.integer "user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "team_id"
+    t.integer "profile_id"
+    t.integer "status", default: 0, null: false
+    t.integer "locale", default: 0, null: false
+    t.boolean "new_task", default: true
+    t.index ["team_id"], name: "index_tasks_on_team_id"
   end
 
   create_table "teams", force: :cascade do |t|

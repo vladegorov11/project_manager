@@ -4,7 +4,12 @@
 	.col-md-8.profile-item
 		.row
 			.col-md-5
-				= image_tag @profile.image.url(:large), class: "rounded float-left mr-2 large-profile-img" if @profile.image?
+				.mt-1
+					= image_tag @profile.image.url(:large), class: "rounded float-left mr-2 mb-4 large-profile-img" if @profile.image?
+				.text-center.mt-3
+					%h4.border-bottom.mb-3 Мои задачи
+					= link_to 'Все задания', my_tasks_profile_path, class: "btn btn-link "
+				= render 'shared/tasks'
 			.col-md-7.border-left
 				= link_to 'Редактировать профиль', edit_profile_path(@profile), class: "btn btn-outline-success float-right"
 				- if policy(current_user).edit?
@@ -28,7 +33,13 @@
 					%b Должности:
 					- @profile.user.roles.each do |role|
 						= role.name
+				%p.border-bottom
+					%b Телефон
+					= @profile.phone
+				- unless @profile.skill.nil?	
+					%p
+						%b Умения
+						= @profile.skill.html_safe
 
- 	
 	.col-md-2
 

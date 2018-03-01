@@ -1,0 +1,8 @@
+- @task.comments.reject{|e| e.new_record? }.each do |comment|
+	.profile-item.border.rounded.mb-3
+		= link_to "<i class='material-icons'>cancel</i>".html_safe, [@team, @task , comment], method: :delete, data: { confirm: 'Are you sure?' }, class: "float-right"
+		.row.mt-4
+			.col-md-2.text-center
+				= image_tag Profile.find(comment.author_id).image.url(:large), class: "rounded thumb-profile-img-team rounded-circle" if Profile.find(comment.author_id).image?
+			.col-md-10.border-left
+				= comment.body.html_safe

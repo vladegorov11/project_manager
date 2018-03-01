@@ -7,11 +7,11 @@ class TeamPolicy
   end
 
   def index?
-    @user
+    @user.admin? or @user.team_lead?
   end
 
   def show?
-    @user
+    @user.admin?  or @user.profile.team_id == @team.id or @user.profile.id == @team.author_id
   end
 
   def create?
@@ -23,14 +23,15 @@ class TeamPolicy
   end
 
   def update?
-    @user.admin? or @user.id == @team.author_id
+    @user.admin? or @user.profile.id == @team.author_id
   end
 
   def edit?
-  	@user.admin? or @user.id == @team.author_id
+  	@user.admin? or @user.profile.id == @team.author_id
   end
 
   def destroy?
-    @user.admin? or @user.id == @team.author_id
+    @user.admin? or @user.profile.id == @team.author_id
   end
+
 end

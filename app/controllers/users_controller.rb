@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     authorize @user
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user.profile, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user.profile, success: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }
       else
         format.html { render :edit }

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :check_blank_profile
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
+  add_flash_types :danger, :success, :info
   private
 
     def user_not_authorized
@@ -13,7 +13,9 @@ class ApplicationController < ActionController::Base
 
     def check_blank_profile
 	  	if user_signed_in?
-	  		flash[:notice] = "Заполните профайл" if current_user.profile.last_name.blank? ||  current_user.profile.first_name.blank?
+        if current_user.profile.last_name.blank? &&  current_user.profile.first_name.blank?
+	  		   redirect_to  edit_profile_path(current_user.profile), danger: "Заполните поля имя и фамилия "
+        end   
 	  	end		
   	end
 

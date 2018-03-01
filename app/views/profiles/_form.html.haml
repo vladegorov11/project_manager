@@ -1,6 +1,6 @@
 .row
-  .col-md-3
-  .col-md-6.profile-item
+  .col-md-2
+  .col-md-8.profile-item
     = form_for @profile, html: {multipart: true} do |f|
       - if @profile.errors.any?
         #error_explanation
@@ -27,10 +27,19 @@
         .form-group
           = f.label "Команда"
           = f.collection_select :team_id, Team.order(:name), :id, :name, {include_blank: true}, class: 'form-control'
-      .form-group
-        = f.label "Аватарка"
-        = f.file_field :image, class: "form-control-file "
+      - if current_user.admin? or current_user.id == @profile.user_id
+        .form-group 
+          = f.label "Телефон в формате: +38099000000"  
+          = f.telephone_field :phone, class: 'form-control', placeholder: '+38099000000'
+      - if current_user.admin? or current_user.id == @profile.user_id
+        .form-group 
+          = f.label "Укажите ваши навыки"  
+          = f.text_area :skill, class: 'form-control'
+      - if current_user.admin? or current_user.id == @profile.user_id
+        .form-group
+          = f.label "Аватарка"
+          = f.file_field :image, class: "form-control-file "
       .actions
         .text-right
           = f.submit 'Сохранить', class: "btn btn-success"
-  .col-md-3
+  .col-md-2

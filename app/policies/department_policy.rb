@@ -7,7 +7,7 @@ class DepartmentPolicy
   end
 
   def index?
-    @user 
+    department_editor 
   end
 
   def show?

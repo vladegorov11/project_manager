@@ -3,20 +3,28 @@
 	.collapse.navbar-collapse#navbarNavAltMarkup
 		.navbar-nav
 			-if user_signed_in?
-				=link_to "Депортаменты", departments_path, class: "nav-item nav-link"
-				=link_to "Команды", teams_path, class: "nav-item nav-link"
-				=link_to "Сотрудники", profiles_path, class: "nav-item nav-link"
+				-if policy(Department).index?
+					=link_to "Депортаменты", departments_path, class: "nav-item nav-link"
+				-if policy(Team).index?		
+					=link_to "Команды", teams_path, class: "nav-item nav-link"
+				-if policy(Profile).index?
+					=link_to "Сотрудники", profiles_path, class: "nav-item nav-link"
 				-if policy(Profile).invitation_user? 
 					=link_to "Пригласить", invitation_user_path, class: "nav-item nav-link"
-				=link_to "мой профиль", current_user.profile, class: "nav-item nav-link"
+				=link_to "Мой профиль", current_user.profile, class: "nav-item nav-link"
+				- unless current_user.profile.team.nil?
+					=link_to "Моя команда", current_user.profile.team, class: "nav-item nav-link"
+
 	.navbar-nav
 		-if user_signed_in?
-			= link_to "Выйти", destroy_user_session_path , :method => :delete, :data => { :confirm => 'Вы уверены?' }, class: "nav-item nav-link btn btn-danger"
+			= link_to "Выйти", destroy_user_session_path , :method => :delete, :data => { :confirm => 'Вы уверены?' }, class: "nav-item nav-link btn btn-danger btn-sm"
 		-else
-			= link_to "Вход", new_user_session_path , class: "nav-item nav-link btn btn-success"
-			= link_to "Регистрация", new_user_registration_path , class: "nav-item nav-link btn btn-secondary" 
+			= link_to "Вход", new_user_session_path , class: "nav-item nav-link btn btn-success btn-sm"
+			= link_to "Регистрация", new_user_registration_path , class: "nav-item nav-link btn btn-secondary btn-sm" 
 / %p#notice.text-center= notice
 -flash.each do |name, message|
-	.alert.alert-danger.mt-8
+	%div{class: "rounded alert alert-#{name} mt-8"}
+		%button{"data-dismiss" => "alert", 'type' => "button", "aria-label" => "Close", class: "close"}
+			%span{"aria-hidden" => "true"}
+				&times;
 		=message
-	

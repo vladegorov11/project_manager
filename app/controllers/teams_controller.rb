@@ -1,7 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_team, only: [:show, :edit, :update, :destroy]
-
   def index
     @teams = Team.all
     authorize @teams
@@ -9,6 +8,7 @@ class TeamsController < ApplicationController
 
   def show
     authorize @team
+    @tasks = @team.tasks.order_update
   end
 
   def new
@@ -16,6 +16,9 @@ class TeamsController < ApplicationController
     authorize @team
   end
 
+  def my_team
+    @team = Team.find(current_user.team_id)
+  end
 
   def edit
     authorize @team
@@ -23,10 +26,11 @@ class TeamsController < ApplicationController
 
   def create
     @team = Team.new(team_params)
+    @team.author_id = current_user.profile.id
     authorize @team
     respond_to do |format|
       if @team.save
-        format.html { redirect_to @team, notice: 'Team was successfully created.' }
+        format.html { redirect_to @team, success: 'Team was successfully created.' }
         format.json { render :show, status: :created, location: @team }
       else
         format.html { render :new }
@@ -39,7 +43,7 @@ class TeamsController < ApplicationController
     authorize @team
     respond_to do |format|
       if @team.update(team_params)
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
+        format.html { redirect_to @team, success: 'Team was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }
       else
         format.html { render :edit }
@@ -52,7 +56,7 @@ class TeamsController < ApplicationController
     authorize @team
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
+      format.html { redirect_to teams_url, success: 'Team was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -66,4 +70,6 @@ class TeamsController < ApplicationController
     def team_params
       params.require(:team).permit(:name, :description)
     end
+
+
 end

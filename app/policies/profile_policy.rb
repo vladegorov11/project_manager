@@ -1,4 +1,3 @@
-
 class ProfilePolicy
   attr_reader :current_user, :model
 
@@ -8,11 +7,11 @@ class ProfilePolicy
   end
 
   def index?
-    @user
+    check_user_role
   end
 
   def show?
-		check_user_role or @user.id == @profile.user_id
+		 @profile.user_id == @user.id or check_user_role
   end
 
   def update?
@@ -27,11 +26,13 @@ class ProfilePolicy
     @user.admin? or @user.human_resource_manager? 
   end
 
-
+  def my_tasks?
+    show?
+  end
 
   def permitted_attributes
 	  if @user.admin? or @user.id == @profile.user_id
-	    [:first_name, :last_name, :wage, :department_id, :team_id, :image]
+	    [:first_name, :last_name, :wage, :department_id, :team_id, :image, :skill, :phone]
 	  elsif @user.human_resource_manager?
 	    [:first_name, :last_name, :wage]
 	  elsif @user.team_lead? 

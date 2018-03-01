@@ -12,7 +12,30 @@
  *
  *= require_tree .
  *= require_self
+ *= require material_icons
+
  */
+@import "froala_editor.min";
+@import "froala_style.min";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import 'plugins/char_counter.min.css';
+@import 'plugins/code_view.min.css';
+@import 'plugins/colors.min.css';
+@import 'plugins/emoticons.min.css';
+@import 'plugins/file.min.css';
+@import 'plugins/fullscreen.min.css';
+@import 'plugins/help.min.css';
+@import 'plugins/image_manager.min.css';
+@import 'plugins/image.min.css';
+@import 'plugins/line_breaker.min.css';
+@import 'plugins/quick_insert.min.css';
+@import 'plugins/special_characters.min.css';
+@import 'plugins/table.min.css';
+@import 'plugins/video.min.css';
+
+@import 'third_party/embedly.min.css';
+@import 'third_party/spell_checker.min.css';
 @import "bootstrap";
 body {
   background: url(https://rozetked.me/images/uploads/qtopnaTehHg3.jpg) no-repeat center center fixed; 
@@ -33,7 +56,7 @@ body {
 .team {
 	margin-top: 15px;
 	padding: 10px;
-	background: #e9ecef;
+	background: #ffffff;
 	border-radius: 8px;
 }
 
@@ -48,7 +71,7 @@ body {
 }
 
 .text-area {
-	height: 200px;
+	min-height: 200px;
 }
 
 #notice {
@@ -58,7 +81,30 @@ body {
 .mt-8{ 
 	margin-top: 70px;
  }
+.mb-8 {
+  margin-bottom: 80px;
+}
 
- .hidden  {
- 	 
- }
+.footer {
+  background: #000000;
+}
+
+.content {
+  min-height: 100% ;
+}
+input[type=checkbox] {
+    display:inline-block;
+    padding: 0 0 0 0px;
+    background:url("https://pbs.twimg.com/profile_images/550291079719698432/LbybHjIh.jpeg") no-repeat;
+    height: 25px;
+    width: 25px;;
+    background-size: 50%;
+}
+
+input[type=checkbox]:checked  {
+    background:url("http://contentservice.mc.reyrey.net/image_v1.0.0/2267461") no-repeat;
+    height: 25px;
+    width: 25px;
+    display:inline-block;
+    background-size: 50%;
+}

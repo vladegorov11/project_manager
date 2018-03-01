@@ -5,11 +5,3 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-
-role_list = ["Admin", "User", "Office manager", "Human resource manager", "Project manager", 
-							"Team lead", "Department head", "Office head", "System admin"]
-
-role_list.each do |role|
-  Role.create(name: role)
-end
